@@ -44,9 +44,9 @@ print(pred)
 
 matrix = confusion_matrix(y_test, pred)
 matrix = matrix.astype('float')
-#cm_norm = matrix / matrix.sum(axis=1)[:, np.newaxis]
+
 print(matrix)
-#class_acc = np.array(cm_norm.diagonal())
+
 class_acc = [matrix[i,i]/np.sum(matrix[i,:]) if np.sum(matrix[i,:]) else 0 for i in range(len(matrix))]
 print('Sens Normal: {0:.3f}, Pneumonia: {1:.3f}, COVID-19: {2:.3f}'.format(class_acc[0],
                                                                            class_acc[1],
