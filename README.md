@@ -132,11 +132,11 @@ Example:
 
 `python eval.py --weightspath model --metaname model.meta_eval --ckptname model-6207`
 
-[[95.  5.  0.]
- [ 8. 91.  1.]
- [ 1.  1.  8.]]
-Sens Normal: 0.950, Pneumonia: 0.910, COVID-19: 0.800
-PPV Normal: 0.913, Pneumonia 0.938, COVID-19: 0.889
+`[[95.  5.  0.]`
+` [ 8. 91.  1.]`
+` [ 1.  1.  8.]]`
+`Sens Normal: 0.950, Pneumonia: 0.910, COVID-19: 0.800`
+`PPV Normal: 0.913, Pneumonia 0.938, COVID-19: 0.889`
 
 ### Steps for inference
 **DISCLAIMER: Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.**
@@ -150,10 +150,10 @@ Example:
 
 `python inference.py --weightspath model --metaname model.meta_eval --ckptname model-6207 --imagepath assets/ex-covid.jpeg`
 
-[[0.01741222 0.18041694 0.8021709 ]]
-Prediction: COVID-19
-**DISCLAIMER**
-Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.
+`[[0.01741222 0.18041694 0.8021709 ]]`
+`Prediction: COVID-19`
+`**DISCLAIMER**`
+`Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.`
 
 ## Results
 These are the final results for COVID-Net Small and COVID-Net Large.   
