@@ -39,6 +39,9 @@ for i in range(len(testfile)):
 y_test = np.array(y_test)
 pred = np.array(pred)
 
+print(y_test)
+print(pred)
+
 matrix = confusion_matrix(y_test, pred)
 matrix = matrix.astype('float')
 #cm_norm = matrix / matrix.sum(axis=1)[:, np.newaxis]

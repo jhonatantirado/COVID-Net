@@ -1,6 +1,6 @@
 # COVID-Net Open Source Initiative
 
-**Note: The COVID-Net models provided here are intended to be used as reference models that can be built upon and enhanced as new data becomes available. They are currently at a research stage and not yet intended as production-ready models (not meant for direct clinicial diagnosis), and we are working continuously to improve them as new data becomes available. Please do not use COVID-Net for self-diagnosis and seek help from your local health authorities.**
+**Note: The COVID-Net models provided here are intended to be used as reference models that can be built upon and enhanced as new data becomes available. They are currently at a research stage and not yet intended as production-ready models (not meant for direct clinical diagnosis), and we are working continuously to improve them as new data becomes available. Please do not use COVID-Net for self-diagnosis and seek help from your local health authorities.**
 
 <p align="center">
 	<img src="assets/covidnet-small-exp.png" alt="photo not available" width="70%" height="70%">
@@ -81,10 +81,10 @@ We especially thank the Radiological Society of North America and others involve
 ### Steps to generate the dataset
 
 1. Download the datasets listed above
- * `git clone https://github.com/ieee8023/covid-chestxray-dataset.git`
- * go to this [link](https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data) to download the RSNA pneumonia dataset
-2. Create a `data` directory and within the data directory, create a `train` and `test` directory
-3. Use [create\_COVIDx\_v2.ipynb](create_COVIDx_v2.ipynb) to combine the two dataset to create COVIDx. Make sure to remember to change the file paths.
+ * `git clone https://github.com/ieee8023/covid-chestxray-dataset.git` in the parent directory of this repo
+ * go to this [link](https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data) to download the RSNA pneumonia dataset in the parent directory of this repo
+2. Create a `data` directory within this repo, and within the data directory, create a `train` and `test` directory
+3. Use the Jupyter notebook [create\_COVIDx\_v2.ipynb](create_COVIDx_v2.ipynb) to combine the two datasets to create COVIDx. Make sure to remember to change the file paths.
 4. We provide the train and test txt files with patientId, image path and label (normal, pneumonia or COVID-19). The description for each file is explained below:
  * [train\_COVIDx.txt](train_COVIDx.txt): This file contains the samples used for training.
  * [test\_COVIDx.txt](test_COVIDx.txt): This file contains the samples used for testing.
@@ -128,6 +128,16 @@ Releasing TF training script from pretrained model soon.
 3. To evaluate a tf checkpoint, `python eval.py --weightspath models/COVID-Netv2 --metaname model.meta_eval --ckptname model-2069`
 4. For more options and information, `python eval.py --help`
 
+Example:
+
+`python eval.py --weightspath model --metaname model.meta_eval --ckptname model-6207`
+
+[[95.  5.  0.]
+ [ 8. 91.  1.]
+ [ 1.  1.  8.]]
+Sens Normal: 0.950, Pneumonia: 0.910, COVID-19: 0.800
+PPV Normal: 0.913, Pneumonia 0.938, COVID-19: 0.889
+
 ### Steps for inference
 **DISCLAIMER: Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.**
 
@@ -135,6 +145,15 @@ Releasing TF training script from pretrained model soon.
 2. Locate models and xray image to be inferenced
 3. To inference, `python inference.py --weightspath models/COVID-Netv2 --metaname model.meta_eval --ckptname model-2069 --imagepath assets/ex-covid.jpeg`
 4. For more options and information, `python inference.py --help`
+
+Example:
+
+`python inference.py --weightspath model --metaname model.meta_eval --ckptname model-6207 --imagepath assets/ex-covid.jpeg`
+
+[[0.01741222 0.18041694 0.8021709 ]]
+Prediction: COVID-19
+**DISCLAIMER**
+Do not use this prediction for self-diagnosis. You should check with your local authorities for the latest advice on seeking medical assistance.
 
 ## Results
 These are the final results for COVID-Net Small and COVID-Net Large.   
