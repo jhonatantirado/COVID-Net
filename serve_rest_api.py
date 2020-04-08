@@ -23,6 +23,10 @@ ckptname = 'model-6207'
 image_tensor_name = 'input_1:0'
 pred_tensor_name = 'dense_3/Softmax:0'
 
+sess = None
+image_tensor = None
+pred_tensor = None
+
 def load_image(image_path):
     url = cloudinary.utils.cloudinary_url(image_path)
     urllib.request.urlretrieve(url[0], image_path)
@@ -32,7 +36,11 @@ def load_image(image_path):
 
     return img
 
-def get_result(x):
+def load_model():
+    global sess
+    global image_tensor
+    global pred_tensor
+
     sess = tf.Session()
     tf.get_default_graph()
     saver = tf.train.import_meta_graph(os.path.join(weightspath, metaname))
@@ -41,15 +49,15 @@ def get_result(x):
     image_tensor = graph.get_tensor_by_name(image_tensor_name)
     pred_tensor = graph.get_tensor_by_name(pred_tensor_name)
 
+def predict(x):
     pred = sess.run(pred_tensor, feed_dict={image_tensor: np.expand_dims(x, axis=0)})
-
     return pred
 
 @app.route('/todo/api/v1.0/prediagnosis/<string:image_url>', methods=['GET'])
 def get_prediagnosis(image_url):
     img_tensor = load_image(image_url)
     print ('image loaded')
-    result = get_result(img_tensor)
+    result = predict(img_tensor)
     print ('before final return')
     os.remove(image_url)
     print('Prediction: {}'.format(inv_mapping[result.argmax(axis=1)[0]]))
@@ -57,4 +65,5 @@ def get_prediagnosis(image_url):
     return jsonify({'result': result.tolist()})
 
 if __name__ == '__main__':
+    load_model()
     app.run(host="0.0.0.0", debug=True)
