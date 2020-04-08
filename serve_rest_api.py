@@ -10,9 +10,9 @@ import cv2
 app = Flask(__name__)
 
 cloudinary.config(
-    cloud_name="digrubrgw",
-    api_key="953684376456813",
-    api_secret="ch1haynm_MVry9wbQrK84UgIdr0"
+    cloud_name="ds04o8pmi",
+    api_key="618563954112198",
+    api_secret="17I684A-O6lVnHh0fRQ9IPje1zQ"
 )
 
 bruise_width, bruise_height, bruise_channels = 224, 224, 3
@@ -30,8 +30,10 @@ def load_image_v2(image_path):
     return img
 
 def load_image(image_path):
-    # url = cloudinary.utils.cloudinary_url(image_path)
-    # urllib.request.urlretrieve(url[0], image_path)
+    url = cloudinary.utils.cloudinary_url(image_path)
+    print (url)
+    urllib.request.urlretrieve(url[0], image_path)
+    print (image_path)
 
     img = cv2.imread(image_path)
     img = cv2.resize(img, (224, 224))
