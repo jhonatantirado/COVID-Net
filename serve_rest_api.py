@@ -91,13 +91,13 @@ def get_prediagnosis(image_url):
     # os.remove(image_url)
     print('Prediction: {}'.format(inv_mapping[result.argmax(axis=1)[0]]))
 
-    return result
-    # return jsonify({'result': result.tolist()})
+    # return result
+    return jsonify({'result': result.tolist()})
 
 if __name__ == '__main__':
     # http://res.cloudinary.com/digrubrgw/image/upload/v1566523367/rxg3y4xbfvog4qgdnomi.png
-    image_url = "assets/ex-covid.jpeg"
+    # image_url = "assets/ex-covid.jpeg"
     # image_url = "f5aipsq8svdge34jkpkr.png"
-    result = get_prediagnosis(image_url)
-    print(result)
-    # app.run(host="0.0.0.0", debug=True)
+    # result = get_prediagnosis(image_url)
+    # print(result)
+    app.run(host="0.0.0.0", debug=True)
