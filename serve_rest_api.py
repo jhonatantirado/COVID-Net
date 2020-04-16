@@ -3,7 +3,7 @@ import urllib.request
 import cloudinary.uploader
 import numpy as np
 import tensorflow as tf
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from keras.preprocessing import image
 import cv2
 
@@ -36,6 +36,30 @@ def load_image(image_path):
 
     return img
 
+def load_image_firebase(image_path):
+    print('load_image_firebase')
+    print(image_path)
+    file_name = format_file_name(image_path)
+    print(file_name)
+    urllib.request.urlretrieve(image_path, file_name)
+    img = cv2.imread(file_name)
+    print (img.shape)
+    img = cv2.resize(img, (img_width, img_height))
+    img = img.astype('float32') / 255.0
+
+    return img
+
+def format_file_name(image_path):
+    url_split = image_path.split("/")
+    file_name = url_split[-1]
+    file_name = file_name.replace("?","")
+    file_name = file_name.replace("=","")
+    file_name = file_name.replace("&","")
+    file_name = file_name.replace("%2F","")
+    file_name = file_name + '.jpg'
+
+    return file_name
+
 def load_model():
     global sess
     global image_tensor
@@ -60,6 +84,23 @@ def get_prediagnosis(image_url):
     result = predict(img_tensor)
     print ('before final return')
     os.remove(image_url)
+    print('Prediction: {}'.format(inv_mapping[result.argmax(axis=1)[0]]))
+
+    return jsonify({'result': result.tolist()})
+
+@app.route('/todo/api/v1.0/covid19', methods=['POST'])
+def get_covid19_prediagnosis():
+    print('get_covid19_prediagnosis')
+    content = request.json
+    print(content)
+    imagenUrl = content['imagenUrl']
+    print(imagenUrl)
+    img_tensor = load_image_firebase(imagenUrl)
+    print ('image loaded')
+    result = predict(img_tensor)
+    print ('before final return')
+    file_name = format_file_name(imagenUrl)
+    os.remove(file_name)
     print('Prediction: {}'.format(inv_mapping[result.argmax(axis=1)[0]]))
 
     return jsonify({'result': result.tolist()})
