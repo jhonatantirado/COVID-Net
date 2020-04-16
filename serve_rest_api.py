@@ -6,8 +6,10 @@ import tensorflow as tf
 from flask import Flask, jsonify, request
 from keras.preprocessing import image
 import cv2
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/todo/api/v1.0/*": {"origins": "*"}})
 
 cloudinary.config(
     cloud_name="ds04o8pmi",
