@@ -20,8 +20,8 @@ cloudinary.config(
 img_width, img_height = 224, 224
 inv_mapping = {0: 'normal', 1: 'pneumonia', 2: 'COVID-19'}
 weightspath = 'model'
-metaname = 'model.meta_eval'
-ckptname = 'model-6207'
+metaname = 'model.meta'
+ckptname = 'model-1697'
 image_tensor_name = 'input_1:0'
 pred_tensor_name = 'dense_3/Softmax:0'
 
